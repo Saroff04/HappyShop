@@ -218,7 +218,7 @@ public class SetDatabase {
         if (!Files.exists(destination)) {
             Files.createDirectories(destination);
         }
-
+        // random comment to test ig
         // Copy files from source folder to destination folder
         //Files.newDirectoryStream(source): list all entries (files and folders) directly in the source directory
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(source)) {
