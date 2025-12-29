@@ -1,5 +1,7 @@
 package ci553.happyshop.client;
-
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import java.io.File;
 import ci553.happyshop.client.customer.*;
 
 import ci553.happyshop.client.emergency.EmergencyExit;
@@ -13,6 +15,7 @@ import ci553.happyshop.orderManagement.OrderHub;
 import ci553.happyshop.storageAccess.DatabaseRW;
 import ci553.happyshop.storageAccess.DatabaseRWFactory;
 import javafx.application.Application;
+import javafx.scene.media.Media;
 import javafx.stage.Stage;
 import java.io.IOException;
 
@@ -33,6 +36,8 @@ import java.io.IOException;
  * @author  Shine Shan University of Brighton
  */
 
+
+
 public class Main extends Application {
 
     public static void main(String[] args) {
@@ -40,9 +45,12 @@ public class Main extends Application {
     }
 
     //starts the system
+
     @Override
     public void start(Stage window) throws IOException {
+        playMusic();
         startCustomerClient();
+
         startPickerClient();
         startOrderTracker();
 
@@ -155,6 +163,15 @@ public class Main extends Application {
     //starts the EmergencyExit GUI, - used to close the entire application immediatelly
     private void startEmergencyExit(){
         EmergencyExit.getEmergencyExit();
+    }
+
+    public void playMusic() {
+        Media media = new Media(
+                getClass().getResource("/background.mp3").toExternalForm()
+        );
+        MediaPlayer player = new MediaPlayer(media);
+        player.setVolume(0); // lower volume so its not overwhelming to the user
+        player.play();
     }
 }
 

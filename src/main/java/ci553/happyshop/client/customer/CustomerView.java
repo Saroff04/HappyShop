@@ -1,5 +1,6 @@
 package ci553.happyshop.client.customer;
 
+
 import ci553.happyshop.utility.UIStyle;
 import ci553.happyshop.utility.WinPosManager;
 import ci553.happyshop.utility.WindowBounds;
@@ -69,6 +70,7 @@ public class CustomerView  {
 
         Scene scene = new Scene(hbRoot, WIDTH, HEIGHT);
         window.setScene(scene);
+
         window.setTitle("🛒 HappyShop Customer Client");
         WinPosManager.registerWindow(window,WIDTH,HEIGHT); //calculate position x and y for this window
         window.show();
@@ -78,6 +80,12 @@ public class CustomerView  {
     private VBox createSearchPage() {
         Label laPageTitle = new Label("Search by Product ID/Name");
         laPageTitle.setStyle(UIStyle.labelTitleStyle);
+
+        Button btnColour = new Button("Change Colour");
+        btnColour.setStyle(UIStyle.buttonStyle);
+
+        HBox hbTopRight = new HBox(btnColour);
+        hbTopRight.setAlignment(Pos.TOP_RIGHT);
 
         Label laId = new Label("ID:      ");
         laId.setStyle(UIStyle.labelStyle);
@@ -115,7 +123,7 @@ public class CustomerView  {
         HBox hbSearchResult = new HBox(5, ivProduct, lbProductInfo);
         hbSearchResult.setAlignment(Pos.CENTER_LEFT);
 
-        VBox vbSearchPage = new VBox(15, laPageTitle, hbId, hbName, hbBtns, hbSearchResult);
+        VBox vbSearchPage = new VBox(15, hbTopRight, laPageTitle, hbId, hbName, hbBtns, hbSearchResult);
         vbSearchPage.setPrefWidth(COLUMN_WIDTH);
         vbSearchPage.setAlignment(Pos.TOP_CENTER);
         vbSearchPage.setStyle("-fx-padding: 15px;");

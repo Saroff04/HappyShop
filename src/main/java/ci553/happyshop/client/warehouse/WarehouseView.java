@@ -1,10 +1,7 @@
 package ci553.happyshop.client.warehouse;
 
 import ci553.happyshop.catalogue.Product;
-import ci553.happyshop.utility.StorageLocation;
-import ci553.happyshop.utility.UIStyle;
-import ci553.happyshop.utility.WinPosManager;
-import ci553.happyshop.utility.WindowBounds;
+import ci553.happyshop.utility.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
