@@ -81,12 +81,11 @@ public class CustomerView  {
         Label laPageTitle = new Label("Search by Product ID/Name");
         laPageTitle.setStyle(UIStyle.labelTitleStyle);
 
-        Button btnColour = new Button("Change Colour");
+        /*Button btnColour = new Button("Change Colour");
         btnColour.setStyle(UIStyle.buttonStyle);
-
         HBox hbTopRight = new HBox(btnColour);
-        hbTopRight.setAlignment(Pos.TOP_RIGHT);
-
+        hbTopRight.setAlignment(Pos.TOP_RIGHT); TO DO LATER, LINE 125 FIX
+          */
         Label laId = new Label("ID:      ");
         laId.setStyle(UIStyle.labelStyle);
         tfId = new TextField();
@@ -123,7 +122,7 @@ public class CustomerView  {
         HBox hbSearchResult = new HBox(5, ivProduct, lbProductInfo);
         hbSearchResult.setAlignment(Pos.CENTER_LEFT);
 
-        VBox vbSearchPage = new VBox(15, hbTopRight, laPageTitle, hbId, hbName, hbBtns, hbSearchResult);
+        VBox vbSearchPage = new VBox(15, /*hbTopRight,*/ laPageTitle, hbId, hbName, hbBtns, hbSearchResult);
         vbSearchPage.setPrefWidth(COLUMN_WIDTH);
         vbSearchPage.setAlignment(Pos.TOP_CENTER);
         vbSearchPage.setStyle("-fx-padding: 15px;");

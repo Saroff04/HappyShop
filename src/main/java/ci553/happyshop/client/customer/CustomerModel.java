@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * TODO
@@ -70,7 +71,12 @@ public class CustomerModel {
             //TODO
             // 1. Merges items with the same product ID (combining their quantities).
             // 2. Sorts the products in the trolley by product ID.
-            trolley.add(theProduct);
+
+            // add one product
+            trolley.add(copyForTrolley(theProduct, 1));
+            // sorting and merging after a product is added
+            trolley = sortANDmerge(trolley);
+
             displayTaTrolley = ProductListFormatter.buildString(trolley); //build a String for trolley so that we can show it
         }
         else{
@@ -79,6 +85,41 @@ public class CustomerModel {
         }
         displayTaReceipt=""; // Clear receipt to switch back to trolleyPage (receipt shows only when not empty)
         updateView();
+    }
+    private Product copyForTrolley(Product p, int qty) { // product copy
+        Product copy = new Product(
+                p.getProductId(),
+                p.getProductDescription(),
+                p.getProductImageName(),
+                p.getUnitPrice(),
+                p.getStockQuantity()
+        );
+        copy.setOrderedQuantity(qty);
+        return copy;
+    }
+
+    private ArrayList<Product> sortANDmerge(ArrayList<Product> input) {
+        Map<String, Product> merged = new TreeMap<>(); // treemap to sort by ID
+
+        for (Product p : input) {
+            String id = p.getProductId();
+
+            if (merged.containsKey(id)) {
+                Product existing = merged.get(id);
+                existing.setOrderedQuantity(existing.getOrderedQuantity() + p.getOrderedQuantity());
+            } else {
+                Product copy = new Product( // a copy so the owner of the objects is trolley
+                        p.getProductId(),
+                        p.getProductDescription(),
+                        p.getProductImageName(),
+                        p.getUnitPrice(),
+                        p.getStockQuantity()
+                );
+                copy.setOrderedQuantity(p.getOrderedQuantity());
+                merged.put(id,copy);
+            }
+        }
+        return new ArrayList<>(merged.values());
     }
 
     void checkOut() throws IOException, SQLException {
