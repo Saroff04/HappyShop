@@ -1,0 +1,10 @@
+Order ID: 8 
+State: Collected
+OrderedDateTime: 2025-12-30 19:46:20 
+ProgressingDateTime: 2025-12-30 19:46:25
+CollectedDateTime: 2025-12-30 19:46:25
+Items:
+ 0007    USB drive          ( 1) £   6.99
+--------------------------------------------
+ Total                               £   6.99
+

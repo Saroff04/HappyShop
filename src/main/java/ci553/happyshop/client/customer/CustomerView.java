@@ -1,9 +1,12 @@
 package ci553.happyshop.client.customer;
 
 
+import ci553.happyshop.catalogue.Product;
 import ci553.happyshop.utility.UIStyle;
 import ci553.happyshop.utility.WinPosManager;
 import ci553.happyshop.utility.WindowBounds;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -18,6 +21,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  * The CustomerView is separated into two sections by a line :
@@ -76,16 +80,35 @@ public class CustomerView  {
         window.show();
         viewWindow=window;// Sets viewWindow to this window for future reference and management.
     }
+    public ListView<Product> lvProducts;
+    private final ObservableList<Product> obeProductList = FXCollections.observableArrayList();
+
+    void customerProductList(ArrayList<Product> productList) {
+        obeProductList.setAll(productList);
+    }
 
     private VBox createSearchPage() {
         Label laPageTitle = new Label("Search by Product ID/Name");
         laPageTitle.setStyle(UIStyle.labelTitleStyle);
 
-        /*Button btnColour = new Button("Change Colour");
-        btnColour.setStyle(UIStyle.buttonStyle);
-        HBox hbTopRight = new HBox(btnColour);
-        hbTopRight.setAlignment(Pos.TOP_RIGHT); TO DO LATER, LINE 125 FIX
-          */
+        // adding the list to the view
+        lvProducts = new ListView<>();
+        lvProducts.setItems(obeProductList);
+        lvProducts.setPrefHeight(25);
+        // changing the appearance of the list
+        lvProducts.setCellFactory(list -> new ListCell<>() {
+            @Override
+            protected void updateItem(Product p, boolean empty) {
+                super.updateItem(p, empty);
+                if (empty || p == null) {
+                    setText(null);
+                } else {
+                    setText(p.getProductId() + " - " + p.getProductDescription());
+                }
+            }
+        });
+
+
         Label laId = new Label("ID:      ");
         laId.setStyle(UIStyle.labelStyle);
         tfId = new TextField();
@@ -122,7 +145,7 @@ public class CustomerView  {
         HBox hbSearchResult = new HBox(5, ivProduct, lbProductInfo);
         hbSearchResult.setAlignment(Pos.CENTER_LEFT);
 
-        VBox vbSearchPage = new VBox(15, /*hbTopRight,*/ laPageTitle, hbId, hbName, hbBtns, hbSearchResult);
+        VBox vbSearchPage = new VBox(15, laPageTitle, hbId, hbName, lvProducts, hbBtns, hbSearchResult);
         vbSearchPage.setPrefWidth(COLUMN_WIDTH);
         vbSearchPage.setAlignment(Pos.TOP_CENTER);
         vbSearchPage.setStyle("-fx-padding: 15px;");

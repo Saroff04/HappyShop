@@ -4,6 +4,7 @@ import ci553.happyshop.catalogue.Order;
 import ci553.happyshop.catalogue.Product;
 import ci553.happyshop.storageAccess.DatabaseRW;
 import ci553.happyshop.orderManagement.OrderHub;
+import ci553.happyshop.storageAccess.DerbyRW;
 import ci553.happyshop.utility.StorageLocation;
 import ci553.happyshop.utility.ProductListFormatter;
 
@@ -35,31 +36,55 @@ public class CustomerModel {
     private String displayTaTrolley = "";                                // Text area content showing current trolley items (Trolley Page)
     private String displayTaReceipt = "";                                // Text area content showing receipt after checkout (Receipt Page)
 
-    //SELECT productID, description, image, unitPrice,inStock quantity
+    private String productINFO(Product p) { // productINFO method instead of writing out everythng
+        double unitPrice = p.getUnitPrice();
+        String description = p.getProductDescription();
+        int stock = p.getStockQuantity();
+
+        String baseInfo = String.format("Product_Id: %s\n%s,\nPrice: £%.2f", p.getProductId(), description, unitPrice);
+        String quantityInfo = String.format("\n%d units left.", stock);
+        return baseInfo + quantityInfo;
+
+    }
+
+    private ArrayList<Product> productList = new ArrayList<>(); // list with items
+
     void search() throws SQLException {
         String productId = cusView.tfId.getText().trim();
+        String nameText = cusView.tfName.getText().trim(); // need this to search using name
+
+
+        theProduct = null;
+
         if(!productId.isEmpty()){
             theProduct = databaseRW.searchByProductId(productId); //search database
-            if(theProduct != null && theProduct.getStockQuantity()>0){
-                double unitPrice = theProduct.getUnitPrice();
-                String description = theProduct.getProductDescription();
-                int stock = theProduct.getStockQuantity();
 
-                String baseInfo = String.format("Product_Id: %s\n%s,\nPrice: £%.2f", productId, description, unitPrice);
-                String quantityInfo = stock < 100 ? String.format("\n%d units left.", stock) : "";
-                displayLaSearchResult = baseInfo + quantityInfo;
-                System.out.println(displayLaSearchResult);
+            if(theProduct != null && theProduct.getStockQuantity()>0){
+               displayLaSearchResult = productINFO(theProduct);
             }
             else{
                 theProduct=null;
                 displayLaSearchResult = "No Product was found with ID " + productId;
-                System.out.println("No Product was found with ID " + productId);
             }
-        }else{
-            theProduct=null;
-            displayLaSearchResult = "Please type ProductID";
-            System.out.println("Please type ProductID.");
+        } else if (!nameText.isEmpty()) {
+
+            productList = databaseRW.searchProduct(nameText);
+            productList.removeIf(p -> p.getStockQuantity() <= 0);
+
+            cusView.customerProductList(productList);
+
+            if (productList.isEmpty()) {
+                displayLaSearchResult = "No product found with name " + nameText;
+                theProduct = null;
+            } else {
+                theProduct = productList.get(0);
+                displayLaSearchResult = productINFO(theProduct);
+            }
         }
+        else {
+            displayLaSearchResult = "Please type ID or Name";
+        }
+
         updateView();
     }
 

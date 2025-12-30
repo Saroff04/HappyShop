@@ -24,7 +24,7 @@ package ci553.happyshop.utility;
 public record UIStyle() {
 
     public static final int customerWinWidth = 600;
-    public static final int customerWinHeight = 300;
+    public static final int customerWinHeight = 375; // made larger so list shows up
     public static final int removeProNotifierWinWidth = customerWinWidth/2 +160;
     public static final int removeProNotifierWinHeight = 230;
 
