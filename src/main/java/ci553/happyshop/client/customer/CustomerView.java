@@ -18,6 +18,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
+import javafx.scene.media.AudioClip;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -32,6 +33,10 @@ import java.util.ArrayList;
  */
 
 public class CustomerView  {
+    // audio clip to play clicking sound for buttons
+    private final AudioClip buttonClickSound =
+            new AudioClip(getClass().getResource("/click.mp3").toString());
+
     public CustomerController cusController;
 
     private final int WIDTH = UIStyle.customerWinWidth;
@@ -202,6 +207,7 @@ public class CustomerView  {
 
 
     private void buttonClicked(ActionEvent event) {
+        buttonClickSound.play(); // playing click sound on press
         try{
             Button btn = (Button)event.getSource();
             String action = btn.getText();
