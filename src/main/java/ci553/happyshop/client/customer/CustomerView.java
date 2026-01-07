@@ -2,6 +2,7 @@ package ci553.happyshop.client.customer;
 
 
 import ci553.happyshop.catalogue.Product;
+import ci553.happyshop.utility.SoundFX;
 import ci553.happyshop.utility.UIStyle;
 import ci553.happyshop.utility.WinPosManager;
 import ci553.happyshop.utility.WindowBounds;
@@ -33,9 +34,6 @@ import java.util.ArrayList;
  */
 
 public class CustomerView  {
-    // audio clip to play clicking sound for buttons
-    private final AudioClip buttonClickSound =
-            new AudioClip(getClass().getResource("/click.mp3").toString());
 
     public CustomerController cusController;
 
@@ -207,7 +205,7 @@ public class CustomerView  {
 
 
     private void buttonClicked(ActionEvent event) {
-        buttonClickSound.play(); // playing click sound on press
+        SoundFX.click(); // playing click sound on press
         try{
             Button btn = (Button)event.getSource();
             String action = btn.getText();
