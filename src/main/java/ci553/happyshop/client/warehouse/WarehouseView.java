@@ -466,6 +466,7 @@ public class WarehouseView  {
 
 
     private void buttonClick(ActionEvent event)  {
+        SoundFX.click(); // plays click sound in Warehouse
         Button btn= (Button)event.getSource();
         String action = btn.getText();
 
