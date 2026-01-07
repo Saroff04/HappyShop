@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+
 /**
  * The CustomerView is separated into two sections by a line :
  *
@@ -34,7 +35,7 @@ import java.util.ArrayList;
  */
 
 public class CustomerView  {
-
+    private boolean backgroundColour = false; // switching background color
     public CustomerController cusController;
 
     private final int WIDTH = UIStyle.customerWinWidth;
@@ -111,7 +112,6 @@ public class CustomerView  {
             }
         });
 
-
         Label laId = new Label("ID:      ");
         laId.setStyle(UIStyle.labelStyle);
         tfId = new TextField();
@@ -133,7 +133,7 @@ public class CustomerView  {
         Button btnAddToTrolley = new Button("Add to Trolley");
         btnAddToTrolley.setStyle(UIStyle.buttonStyle);
         btnAddToTrolley.setOnAction(this::buttonClicked);
-        HBox hbBtns = new HBox(10, laPlaceHolder,btnSearch, btnAddToTrolley);
+        HBox hbBtns = new HBox(10, laPlaceHolder,btnSearch, btnAddToTrolley );
 
         ivProduct = new ImageView("imageHolder.jpg");
         ivProduct.setFitHeight(60);
@@ -160,6 +160,21 @@ public class CustomerView  {
         Label laPageTitle = new Label("🛒🛒  Trolley 🛒🛒");
         laPageTitle.setStyle(UIStyle.labelTitleStyle);
 
+        // new button to change the color of the background
+        Button btnBkground = new Button ("Change Color");
+        btnBkground.setStyle(UIStyle.buttonStyle);
+
+        btnBkground.setOnAction(e -> {
+            SoundFX.click();
+            backgroundColour = !backgroundColour;
+
+            if (backgroundColour) {
+                hbRoot.setStyle("-fx-padding: 8px; -fx-background-color: #2b2b2b;");
+            } else {
+                hbRoot.setStyle(UIStyle.rootStyle);
+            }
+        });
+
         taTrolley = new TextArea();
         taTrolley.setEditable(false);
         taTrolley.setPrefSize(WIDTH/2, HEIGHT-50);
@@ -176,7 +191,7 @@ public class CustomerView  {
         hbBtns.setStyle("-fx-padding: 15px;");
         hbBtns.setAlignment(Pos.CENTER);
 
-        vbTrolleyPage = new VBox(15, laPageTitle, taTrolley, hbBtns);
+        vbTrolleyPage = new VBox(15, laPageTitle, taTrolley, btnBkground,  hbBtns);
         vbTrolleyPage.setPrefWidth(COLUMN_WIDTH);
         vbTrolleyPage.setAlignment(Pos.TOP_CENTER);
         vbTrolleyPage.setStyle("-fx-padding: 15px;");

@@ -117,6 +117,8 @@ public class WarehouseView  {
      * They are kept as instance variables to manage their states (enabled/disabled) when necessary,
      * eg. when the Cancel or Submit buttons are clicked, to prevent unintended interactions.
      */
+private HBox hbRoot; // will be using hbRoot to change the background colour
+private boolean backgroundColorWarehouse = false;
 
     //some elements in vbNewProduct,we need to getValue from them and setValue for them
     TextField tfIdNewPro;
@@ -140,7 +142,7 @@ public class WarehouseView  {
         lineContainer.setAlignment(Pos.CENTER);
 
         //top level layout manager
-        HBox hbRoot = new HBox(15, vbSearchPage, lineContainer, vbProductFormPage);
+        hbRoot = new HBox(15, vbSearchPage, lineContainer, vbProductFormPage);
         hbRoot.setStyle(UIStyle.rootStyleWarehouse);
 
         Scene scene = new Scene(hbRoot, WIDTH, HEIGHT);
@@ -167,6 +169,22 @@ public class WarehouseView  {
                 throw new RuntimeException(e);
             }
         });
+
+        // new button to change the color of the background in warehouse
+        Button btnBkgroundWare = new Button ("Change Color");
+        btnBkgroundWare.setStyle(UIStyle.buttonStyle);
+
+        btnBkgroundWare.setOnAction(e -> {
+            SoundFX.click();
+            backgroundColorWarehouse = !backgroundColorWarehouse;
+
+            if (backgroundColorWarehouse) {
+                hbRoot.setStyle("-fx-padding: 8px; -fx-background-color: #2b2b2b;");
+            } else {
+                hbRoot.setStyle(UIStyle.rootStyleWarehouse);
+            }
+        });
+
         Button btnSearch = new Button("🔍");
         //Button btnSearch = new Button("\uD83D\uDD0D"); // Unicode for 🔍
         btnSearch.setOnAction(this::buttonClick);
@@ -192,11 +210,11 @@ public class WarehouseView  {
         // data, an observable ArrayList, observed by obrLvProducts
         obeProductList = FXCollections.observableArrayList();
         obrLvProducts = new ListView<>(obeProductList);//ListView proListView observes proList
-        obrLvProducts.setPrefHeight(HEIGHT - 100);
+        obrLvProducts.setPrefHeight(HEIGHT - 170); // adjusting height for more pleasant fitting of colour button
         obrLvProducts.setFixedCellSize(50);
         obrLvProducts.setStyle(UIStyle.listViewStyle);
 
-        VBox vbSearchResult = new VBox(5,hbLaBtns, obrLvProducts);
+        VBox vbSearchResult = new VBox(5,hbLaBtns, obrLvProducts, btnBkgroundWare);
 
         /**
          * When is setCellFactory() Needed?
