@@ -245,8 +245,8 @@ public class CustomerModel {
      //Path.toUri(): Converts a Path object (a file or a directory path) to a URI object.
      //File.toURI(): Converts a File object (a file on the filesystem) to a URI object
 
-    //for test only
+    /*for test only
     public ArrayList<Product> getTrolley() {
         return trolley;
-    }
+    }*/
 }
