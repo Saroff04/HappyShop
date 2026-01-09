@@ -170,7 +170,7 @@ public class Main extends Application {
                 getClass().getResource("/background.mp3").toExternalForm()
         );
         MediaPlayer player = new MediaPlayer(media);
-        player.setVolume(0); // lower volume so its not overwhelming to the user
+        player.setVolume(0.2); // lower volume so its not overwhelming
         player.play();
     }
 }
